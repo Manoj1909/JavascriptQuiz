@@ -1,0 +1,460 @@
+<!--Quiz App-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0b1a3a, #0e2a5a);
+            font-family: sans-serif;
+            color: white;
+        }
+
+        #quiz-container {
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 25px;
+            border-radius: 20px;
+            background: rgba(0, 0, 50, 0.6);
+            backdrop-filter: blur(10px);
+            border: 2px solid #00ffcc;
+            box-shadow: 0 0 20px #00ffcc;
+        }
+
+        /* Question box */
+        #question {
+            padding: 15px;
+            border: 2px solid #00ffcc;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px #00ffcc;
+        }
+
+        /* Answer buttons */
+        .btn {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #ff00ff;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        .btn:hover {
+            background: #ff00ff;
+            color: black;
+        }
+
+
+        .next,
+        .prv {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 2px solid #00ffcc;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 10px #00ffcc;
+            transition: 0.3s;
+        }
+
+        .col {
+            display: flex;
+            justify-content: space-between;
+            /* left & right */
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .next:hover,
+        .prv:hover {
+            background: #00ffcc;
+            color: black;
+        }
+
+        /* Logout button */
+        .danger {
+            padding: 8px 15px;
+            border-radius: 10px;
+            border: 2px solid #ff00ff;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        .danger:hover {
+            background: #ff00ff;
+            color: black;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1>Welcome <span id="username"></span> 🎉</h1>
+
+        <h2 id="resultText"></h2>
+
+        <button class="danger" onclick="logout()">Logout</button>
+    </div>
+
+    <div id="quiz-container">
+        <h2 id="question">Question Text</h2>
+        <div id="answers"></div>
+        <div class="col">
+            <button id="prv-btn" class="prv">Previous</button>
+            <button id="nxt-btn" class="next">Next</button>
+        </div>
+        <h2 id="resultText"></h2>
+    </div>
+    <script>
+
+        const user = localStorage.getItem("loggedUser");
+
+        if (user) {
+            document.getElementById("username").textContent = user;
+        } else {
+            document.getElementById("username").textContent = "Guest";
+        }
+
+
+        const question = [
+            {
+                question: "Which keyword declares a constant in Javascript",
+                answers: [
+                    { text: "let", correct: false },
+                    { text: "var", correct: false },
+                    { text: "const", correct: true },
+                    { text: "static", correct: false },
+                ]
+            },
+            {
+                question: "Which company developed JavaScript?",
+                answers: [
+                    { text: "Microsoft", correct: false },
+                    { text: "Netscape", correct: true },
+                    { text: "Google", correct: false },
+                    { text: "Apple", correct: false },
+                ]
+            },
+            {
+                question: "Which method is used to print in browser console?",
+                answers: [
+                    { text: "console.print()", correct: false },
+                    { text: "console.log()", correct: true },
+                    { text: "print.console()", correct: false },
+                    { text: "log.console()", correct: false },
+                ]
+            },
+            {
+                question: "Which symbol is used for single line comments in JavaScript?",
+                answers: [
+                    { text: "//", correct: true },
+                    { text: "/* */", correct: false },
+                    { text: "#", correct: false },
+                    { text: "<!-- -->", correct: false },
+                ]
+            },
+            {
+                question: "Which data type is NOT primitive in JavaScript?",
+                answers: [
+                    { text: "String", correct: false },
+                    { text: "Number", correct: false },
+                    { text: "Object", correct: true },
+                    { text: "Boolean", correct: false },
+                ]
+            },
+            {
+                question: "Which operator is used for strict equality?",
+                answers: [
+                    { text: "==", correct: false },
+                    { text: "=", correct: false },
+                    { text: "===", correct: true },
+                    { text: "!=", correct: false },
+                ]
+            },
+            {
+                question: "Which function converts JSON to object?",
+                answers: [
+                    { text: "JSON.stringify()", correct: false },
+                    { text: "JSON.parse()", correct: true },
+                    { text: "JSON.convert()", correct: false },
+                    { text: "JSON.toObject()", correct: false },
+                ]
+            },
+            {
+                question: "Which loop runs at least once?",
+                answers: [
+                    { text: "for loop", correct: false },
+                    { text: "while loop", correct: false },
+                    { text: "do...while loop", correct: true },
+                    { text: "foreach loop", correct: false },
+                ]
+            },
+            {
+                question: "Which keyword is used to define a function?",
+                answers: [
+                    { text: "def", correct: false },
+                    { text: "func", correct: false },
+                    { text: "function", correct: true },
+                    { text: "define", correct: false },
+                ]
+            },
+            {
+                question: "Which method adds element to end of array?",
+                answers: [
+                    { text: "push()", correct: true },
+                    { text: "pop()", correct: false },
+                    { text: "shift()", correct: false },
+                    { text: "unshift()", correct: false },
+                ]
+            },
+            {
+                question: "Which method removes last element of array?",
+                answers: [
+                    { text: "push()", correct: false },
+                    { text: "pop()", correct: true },
+                    { text: "shift()", correct: false },
+                    { text: "splice()", correct: false },
+                ]
+            },
+            {
+                question: "Which keyword is used for block scope variable?",
+                answers: [
+                    { text: "var", correct: false },
+                    { text: "let", correct: true },
+                    { text: "static", correct: false },
+                    { text: "global", correct: false },
+                ]
+            },
+            {
+                question: "Which event occurs when user clicks an element?",
+                answers: [
+                    { text: "onchange", correct: false },
+                    { text: "onmouseover", correct: false },
+                    { text: "onclick", correct: true },
+                    { text: "onload", correct: false },
+                ]
+            },
+            {
+                question: "Which method is used to select element by ID?",
+                answers: [
+                    { text: "getElementByClass()", correct: false },
+                    { text: "getElementById()", correct: true },
+                    { text: "querySelectorAll()", correct: false },
+                    { text: "getElements()", correct: false },
+                ]
+            },
+            {
+                question: "Which keyword is used to stop a loop?",
+                answers: [
+                    { text: "stop", correct: false },
+                    { text: "exit", correct: false },
+                    { text: "break", correct: true },
+                    { text: "return", correct: false },
+                ]
+            },
+            {
+                question: "Which method is used to join array elements into a string?",
+                answers: [
+                    { text: "concat()", correct: false },
+                    { text: "join()", correct: true },
+                    { text: "slice()", correct: false },
+                    { text: "map()", correct: false },
+                ]
+            },
+            {
+                question: "Which keyword is used to create a class in JavaScript?",
+                answers: [
+                    { text: "class", correct: true },
+                    { text: "object", correct: false },
+                    { text: "function", correct: false },
+                    { text: "define", correct: false },
+                ]
+            },
+            {
+                question: "Which method is used to convert string to number?",
+                answers: [
+                    { text: "parseInt()", correct: true },
+                    { text: "toString()", correct: false },
+                    { text: "Number.toText()", correct: false },
+                    { text: "convert()", correct: false },
+                ]
+            },
+            {
+                question: "Which symbol is used for template literals?",
+                answers: [
+                    { text: "\" \"", correct: false },
+                    { text: "' '", correct: false },
+                    { text: "` `", correct: true },
+                    { text: "//", correct: false },
+                ]
+            },
+            {
+                question: "Which method is used to delay execution in JavaScript?",
+                answers: [
+                    { text: "delay()", correct: false },
+                    { text: "wait()", correct: false },
+                    { text: "setTimeout()", correct: true },
+                    { text: "pause()", correct: false },
+                ]
+            }
+        ]
+
+
+        const questionElement = document.getElementById("question");
+        const answersButtons = document.getElementById("answers");
+        const prevButton = document.getElementById("prv-btn");
+        const nextButton = document.getElementById("nxt-btn");
+        let currentQuestionIndex = 0;
+        let score = 0;
+        nextButton.disabled = true;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        prevButton.addEventListener("click", () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                resetState();
+                showQuestion();
+            }
+        });
+
+
+        function startQuiz() {
+            shuffleArray(question); // ADD THIS LINE
+
+            nextButton.disabled = true;
+            // prevButton.disabled = true;
+            nextButton.removeEventListener("click", startQuiz);
+            currentQuestionIndex = 0;
+            score = 0;
+            nextButton.textContent = "Next";
+            showQuestion();
+        }
+
+
+
+
+        function updateButtons() {
+            // Hide or disable Previous button on first question
+            if (currentQuestionIndex === 0) {
+                prevButton.style.display = "none";   // hide button
+            } else {
+                prevButton.style.display = "inline-block"; // show button
+            }
+
+            nextButton.disabled = true;
+        }
+
+
+
+
+        function showQuestion() {
+            resetState();
+
+            const currentQuestion = question[currentQuestionIndex];
+            shuffleArray(currentQuestion.answers);
+
+            questionElement.textContent = currentQuestion.question;
+
+            currentQuestion.answers.forEach((ans) => {
+                const button = document.createElement("button");
+                button.textContent = ans.text;
+                button.classList.add("btn");
+                answersButtons.appendChild(button);
+
+                if (ans.correct) {
+                    button.dataset.correct = ans.correct;
+                }
+
+                button.addEventListener("click", selectAnswer);
+            });
+
+            updateButtons(); // Correct place
+        }
+
+
+
+        function selectAnswer(e) {
+            const selectedBtn = e.target;
+            const selectedIsCorrect = selectedBtn.dataset.correct == "true"
+            if (selectedIsCorrect) {
+                score++;
+            }
+            Array.from(answersButtons.children).forEach(btn => {
+                const isCorrect = btn.dataset.correct;
+                if (isCorrect) {
+                    btn.classList.add("correct");
+
+                } else {
+                    btn.classList.add("incorrect");
+                }
+                btn.disabled = true;
+            })
+            console.log(score)
+            nextButton.disabled = false;
+        }
+
+        nextButton.addEventListener("click", () => {
+            currentQuestionIndex++;
+            resetState();
+            if (currentQuestionIndex < question.length) {
+                showQuestion();
+            } else {
+                showScore();
+            }
+        })
+
+        function showScore() {
+            localStorage.setItem("quizScore", score);
+
+            if (score >= 15) {
+                localStorage.setItem("result", "Pass");
+            } else {
+                localStorage.setItem("result", "Fail");
+            }
+
+            // Redirect to result page
+            window.location.href = "result.html";
+        }
+
+        function resetState() {
+            nextButton.disabled = true;
+            while (answersButtons.firstChild) {
+                answersButtons.removeChild(answersButtons.firstChild);
+            }
+        }
+
+        startQuiz();
+        function logout() {
+
+            localStorage.removeItem("loggedUser");
+            window.location.href = "Quiz.html";
+        }
+
+
+        const resultText = document.getElementById("resultText");
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,175 @@
+/* body{
+  background: linear-gradient(135deg, #0f2a7c, #159983);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.card{
+  border: none;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.9);
+  transition: 0.3s ease-in-out;
+}
+
+.card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+
+.form-control{
+  border-radius: 8px;
+  padding: 10px;
+  transition: 0.3s;
+}
+
+.form-control:focus{
+  border-color: #4e73df;
+  box-shadow: 0 0 8px rgba(78,115,223,0.5);
+}
+
+
+.btn-primary{
+  background-color: #4e73df;
+  border: none;
+  border-radius: 8px;
+}
+
+.btn-primary:hover{
+  background-color: #2e59d9;
+}
+
+.btn-success{
+  border-radius: 8px;
+}
+
+.btn-danger{
+  border-radius: 8px;
+}
+
+
+#formTitle{
+  font-weight: bold;
+  color: #333;
+}
+
+
+a{
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover{
+  text-decoration: underline;
+}
+
+
+#dashboard h3{
+  color: #8dc5b0;
+}  */
+
+/* Background */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #0b1a3a, #0e2a5a);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card Design */
+.card {
+  max-width: 450px;
+  margin: 50px auto;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(0, 0, 50, 0.6);
+  backdrop-filter: blur(10px);
+  border: 2px solid #00ffcc;
+  box-shadow: 0 0 20px #00ffcc;
+  color: #fff;
+}
+
+/* Title */
+#formTitle {
+  color: #00ffff;
+  font-weight: bold;
+  text-shadow: 0 0 10px #00ffff;
+}
+
+/* Input Fields */
+.form-control {
+  background: transparent;
+  border: 1px solid #00ffff;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #00ffcc;
+}
+
+.form-control::placeholder {
+  color: #ccc;
+}
+
+.form-control:focus {
+  background: transparent;
+  box-shadow: 0 0 10px #00ffff;
+  border-color: #00ffff;
+  color: #fff;
+}
+
+/* Buttons */
+.btn-primary {
+  background: transparent;
+  border: 2px solid #ff00ff;
+  box-shadow: 0 0 10px #ff00ff;
+  color: white;
+  border-radius: 25px;
+  transition: 0.3s;
+
+}
+
+.btn-primary:hover {
+  background: #ff00ff;
+  color: #000;
+  box-shadow: 0 0 15px #00ffff;
+}
+
+.btn-success {
+  background: transparent;
+  border: 2px solid #ff00ff;
+  box-shadow: 0 0 10px #ff00ff;
+  color: white;
+  border-radius: 25px;
+  transition: 0.3s;
+}
+
+.btn-success:hover {
+  background: #ff00ff;
+  color: #000;
+  box-shadow: 0 0 10px #ff00ff;
+
+}
+
+/* Links */
+a {
+  color: #00ffff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Error Text */
+.text-danger {
+  font-size: 12px;
+}
+
+/* Responsive spacing */
+.container {
+  margin-top: 80px;
+}

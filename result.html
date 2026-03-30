@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result Page</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 100px;
+            background: linear-gradient(135deg, #0b1a3a, #0e2a5a);
+              height: 100vh;
+
+        }
+
+        .box {
+            backdrop-filter: blur(10px);
+            border: 2px solid #00ffcc;
+            box-shadow: 0 0 20px #00ffcc;
+            padding: 30px;
+            width: 300px;
+            margin: auto;
+            border-radius: 20px;
+            color: white;
+                        background: rgba(0, 0, 50, 0.6);
+
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        #resultText {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            /* background: black; */
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h1>Your Result 🎯</h1>
+
+    <p id="score"></p>
+    <p id="resultText"></p>
+</div>
+
+<script>
+
+const score = localStorage.getItem("quizScore");
+const result = localStorage.getItem("result");
+
+document.getElementById("score").textContent = 
+    `Score: ${score} / 20`;
+
+const resultText = document.getElementById("resultText");
+
+if (result === "Pass") {
+    resultText.textContent = "PASS ✅";
+    resultText.style.color = "green";
+} else {
+    resultText.textContent = "FAIL ❌";
+    resultText.style.color = "red";
+}
+
+// Auto redirect after 5 seconds (no countdown display)
+setTimeout(() => {
+    window.location.href = "Quiz.html";
+}, 5000);
+
+
+
+</script>
+
+</body>
+</html>
